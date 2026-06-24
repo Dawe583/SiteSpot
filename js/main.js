@@ -164,16 +164,16 @@
         <div style="
           padding: 3rem 2rem;
           text-align: center;
-          border: 1px solid rgba(0,255,204,0.25);
+          border: 1px solid rgba(200,255,62,0.2);
           border-radius: 12px;
-          background: rgba(0,255,204,0.05);
+          background: rgba(200,255,62,0.04);
         ">
           <svg viewBox="0 0 48 48" fill="none" width="48" height="48" style="margin: 0 auto 1.5rem; display:block;">
-            <circle cx="24" cy="24" r="22" stroke="#00ffcc" stroke-width="1.5"/>
-            <path d="M14 24l7 7 13-13" stroke="#00ffcc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="24" cy="24" r="22" stroke="#c8ff3e" stroke-width="1.5"/>
+            <path d="M14 24l7 7 13-13" stroke="#c8ff3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <p style="font-size:1.1rem; font-weight:600; color:#e8f4fc; margin-bottom:0.5rem;">Zpráva odeslána!</p>
-          <p style="color:#7da8c4; font-size:0.95rem;">Ozvu se vám do 24 hodin. Díky, ${escapeHTML(name)}!</p>
+          <p style="font-size:1.1rem; font-weight:600; color:#f0ede8; margin-bottom:0.5rem; font-family:'Syne',sans-serif;">Zpráva odeslána!</p>
+          <p style="color:#888880; font-size:0.95rem;">Ozvu se vám do 24 hodin. Díky, ${escapeHTML(name)}!</p>
         </div>
       `;
     });

@@ -53,8 +53,8 @@
   const randoms   = new Float32Array(COUNT * 3); // r0 phase, r1 size, r2 brightness
   const colorsArr = new Float32Array(COUNT * 3); // per-particle base colour
 
-  const _cA = new THREE.Color(0x00c8ff); // cyan
-  const _cB = new THREE.Color(0x00ffcc); // teal
+  const _cA = new THREE.Color(0xc8ff3e); // lime
+  const _cB = new THREE.Color(0x88dd00); // green
   const _cC = new THREE.Color(0xffffff); // white core
 
   for (let i = 0; i < COUNT; i++) {
@@ -213,17 +213,17 @@
   }
 
   const glowRings = [
-    makeGlowRing(1.82, 0.012, 0,   0x00c8ff, 0.55),
-    makeGlowRing(1.65, 0.009, 58,  0x00ffcc, 0.45),
-    makeGlowRing(1.52, 0.009, -42, 0x00c8ff, 0.38),
-    makeGlowRing(1.30, 0.007, 90,  0x00ffcc, 0.30),
-    makeGlowRing(1.10, 0.007, 28,  0x0088ff, 0.25),
-    makeGlowRing(0.88, 0.005, -68, 0x00ffcc, 0.20),
+    makeGlowRing(1.82, 0.012, 0,   0xc8ff3e, 0.45),
+    makeGlowRing(1.65, 0.009, 58,  0x88dd00, 0.35),
+    makeGlowRing(1.52, 0.009, -42, 0xc8ff3e, 0.28),
+    makeGlowRing(1.30, 0.007, 90,  0x88dd00, 0.22),
+    makeGlowRing(1.10, 0.007, 28,  0xc8ff3e, 0.18),
+    makeGlowRing(0.88, 0.005, -68, 0x88dd00, 0.15),
   ];
 
   // ── Outer halo — very large, barely visible ──────────────────
   const haloMat = new THREE.MeshBasicMaterial({
-    color: 0x003355,
+    color: 0x1a2500,
     transparent: true,
     opacity: 0.12,
     blending: THREE.AdditiveBlending,

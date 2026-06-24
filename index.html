@@ -6,7 +6,7 @@
   <title>SiteSpot — Weby, které fungují</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -14,122 +14,165 @@
   <!-- 3D Canvas Background -->
   <canvas id="bg-canvas"></canvas>
 
+  <!-- Noise overlay -->
+  <div class="noise"></div>
+
   <!-- Navigation -->
   <nav class="nav" id="nav">
     <div class="nav__inner">
       <a href="#" class="nav__logo">
-        <img src="assets/logo.png" alt="SiteSpot logo" class="nav__logo-img" />
-        <span class="nav__logo-text">SiteSpot</span>
+        <span class="nav__logo-text">SiteSpot<span class="nav__logo-dot">.</span></span>
       </a>
       <ul class="nav__links">
         <li><a href="#services">Služby</a></li>
         <li><a href="#process">Proces</a></li>
         <li><a href="#work">Projekty</a></li>
-        <li><a href="#contact" class="nav__cta">Začít projekt</a></li>
+        <li><a href="#contact" class="nav__cta">Začít projekt <span class="nav__cta-arrow">↗</span></a></li>
       </ul>
       <button class="nav__burger" id="burger" aria-label="Menu">
-        <span></span><span></span><span></span>
+        <span></span><span></span>
       </button>
     </div>
   </nav>
 
   <!-- Hero Section -->
   <section class="hero" id="hero">
+    <div class="hero__bg-label">WEB STUDIO — ČESKÁ REPUBLIKA — 2025</div>
+
     <div class="hero__content">
-      <p class="hero__eyebrow">Tvoříme digitální přítomnost</p>
-      <h1 class="hero__headline">
-        Web, který<br/>
-        <span class="hero__highlight">prodává</span><br/>
-        za vás.
-      </h1>
-      <p class="hero__sub">
-        Od landing page po komplexní webové aplikace — navrhujeme, 
-        vyvíjíme a spouštíme weby, které přinášejí výsledky.
-      </p>
-      <div class="hero__actions">
-        <a href="#contact" class="btn btn--primary">Nezávazná konzultace</a>
-        <a href="#work" class="btn btn--ghost">Naše práce →</a>
+      <div class="hero__tag">
+        <span class="hero__tag-dot"></span>
+        Dostupní pro nové projekty
       </div>
-      <div class="hero__stats">
-        <div class="stat">
-          <span class="stat__num">47+</span>
-          <span class="stat__label">Projektů</span>
-        </div>
-        <div class="stat">
-          <span class="stat__num">98%</span>
-          <span class="stat__label">Spokojených klientů</span>
-        </div>
-        <div class="stat">
-          <span class="stat__num">3×</span>
-          <span class="stat__label">Rychlejší weby</span>
+      <h1 class="hero__headline">
+        <span class="hero__line">Weby,</span>
+        <span class="hero__line hero__line--accent">které</span>
+        <span class="hero__line">prodávají.</span>
+      </h1>
+      <div class="hero__bottom">
+        <p class="hero__sub">
+          Od landing page po komplexní webové aplikace — navrhujeme, 
+          vyvíjíme a spouštíme weby, které přinášejí skutečné výsledky.
+        </p>
+        <div class="hero__actions">
+          <a href="#contact" class="btn btn--primary">Konzultace zdarma</a>
+          <a href="#work" class="btn btn--ghost">Naše projekty <span>↓</span></a>
         </div>
       </div>
     </div>
-    <div class="hero__scroll-hint">
-      <span>Scrolluj</span>
+
+    <div class="hero__stats">
+      <div class="stat">
+        <span class="stat__num">47+</span>
+        <span class="stat__label">Projektů dokončeno</span>
+      </div>
+      <div class="stat__divider"></div>
+      <div class="stat">
+        <span class="stat__num">98%</span>
+        <span class="stat__label">Spokojených klientů</span>
+      </div>
+      <div class="stat__divider"></div>
+      <div class="stat">
+        <span class="stat__num">4 týdny</span>
+        <span class="stat__label">Průměrná dodací lhůta</span>
+      </div>
+    </div>
+
+    <div class="hero__scroll">
       <div class="hero__scroll-line"></div>
+      <span>scroll</span>
     </div>
   </section>
+
+  <!-- Marquee ticker -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Webdesign</span><span class="marquee__sep">✦</span>
+      <span>UX/UI Design</span><span class="marquee__sep">✦</span>
+      <span>Next.js</span><span class="marquee__sep">✦</span>
+      <span>E-commerce</span><span class="marquee__sep">✦</span>
+      <span>SEO Optimalizace</span><span class="marquee__sep">✦</span>
+      <span>React</span><span class="marquee__sep">✦</span>
+      <span>Headless CMS</span><span class="marquee__sep">✦</span>
+      <span>Core Web Vitals</span><span class="marquee__sep">✦</span>
+      <span>Shopify</span><span class="marquee__sep">✦</span>
+      <span>Webdesign</span><span class="marquee__sep">✦</span>
+      <span>UX/UI Design</span><span class="marquee__sep">✦</span>
+      <span>Next.js</span><span class="marquee__sep">✦</span>
+      <span>E-commerce</span><span class="marquee__sep">✦</span>
+      <span>SEO Optimalizace</span><span class="marquee__sep">✦</span>
+      <span>React</span><span class="marquee__sep">✦</span>
+      <span>Headless CMS</span><span class="marquee__sep">✦</span>
+      <span>Core Web Vitals</span><span class="marquee__sep">✦</span>
+      <span>Shopify</span><span class="marquee__sep">✦</span>
+    </div>
+  </div>
 
   <!-- Services Section -->
   <section class="services" id="services">
     <div class="container">
       <div class="section-header">
-        <p class="section-eyebrow">Co děláme</p>
-        <h2 class="section-title">Kompletní webová řešení</h2>
+        <span class="section-eyebrow">Co děláme</span>
+        <h2 class="section-title">Kompletní webová<br/>řešení na míru</h2>
       </div>
       <div class="services__grid">
-        <article class="service-card">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="4" y="8" width="32" height="24" rx="2" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M4 14h32" stroke="currentColor" stroke-width="1.5"/>
-              <circle cx="9" cy="11" r="1.5" fill="currentColor"/>
-              <circle cx="14" cy="11" r="1.5" fill="currentColor"/>
-              <circle cx="19" cy="11" r="1.5" fill="currentColor"/>
-            </svg>
-          </div>
-          <h3 class="service-card__title">Webdesign & UX</h3>
-          <p class="service-card__desc">Vizuálně silné návrhy postavené na datech o vašich zákaznících. Každý pixel slouží konverzi.</p>
-          <span class="service-card__tag">Figma · Prototypy · A/B testy</span>
-        </article>
-
-        <article class="service-card service-card--featured">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 16l-6 4 6 4M28 16l6 4-6 4M22 12l-4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3 class="service-card__title">Vývoj webu</h3>
-          <p class="service-card__desc">Čistý kód, rychlé načítání, skvělé Core Web Vitals. Weby, které Google miluje a uživatelé nezavřou.</p>
-          <span class="service-card__tag">React · Next.js · Headless CMS</span>
-        </article>
 
         <article class="service-card">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M20 6c0 0-8 6-8 14s8 14 8 14M20 6c0 0 8 6 8 14s-8 14-8 14M6 20h28" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
+          <div class="service-card__number">01</div>
+          <div class="service-card__body">
+            <h3 class="service-card__title">Webdesign & UX</h3>
+            <p class="service-card__desc">Vizuálně silné návrhy postavené na datech o vašich zákaznících. Každý pixel slouží konverzi a uživatelskému zážitku.</p>
+            <div class="service-card__footer">
+              <span class="service-card__tag">Figma</span>
+              <span class="service-card__tag">Prototypy</span>
+              <span class="service-card__tag">A/B testy</span>
+            </div>
           </div>
-          <h3 class="service-card__title">SEO & Výkon</h3>
-          <p class="service-card__desc">Technické SEO a optimalizace výkonu zabudované od prvního dne. Viditelnost od spuštění.</p>
-          <span class="service-card__tag">Core Web Vitals · Schema · Analytics</span>
+          <div class="service-card__arrow">↗</div>
+        </article>
+
+        <article class="service-card service-card--accent">
+          <div class="service-card__number">02</div>
+          <div class="service-card__body">
+            <h3 class="service-card__title">Vývoj webu</h3>
+            <p class="service-card__desc">Čistý kód, rychlé načítání, skvělé Core Web Vitals. Weby, které Google miluje a uživatelé nezavřou po půl sekundě.</p>
+            <div class="service-card__footer">
+              <span class="service-card__tag">React</span>
+              <span class="service-card__tag">Next.js</span>
+              <span class="service-card__tag">Headless CMS</span>
+            </div>
+          </div>
+          <div class="service-card__arrow">↗</div>
         </article>
 
         <article class="service-card">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="6" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/>
-              <rect x="22" y="6" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/>
-              <rect x="6" y="22" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/>
-              <rect x="22" y="22" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
+          <div class="service-card__number">03</div>
+          <div class="service-card__body">
+            <h3 class="service-card__title">SEO & Výkon</h3>
+            <p class="service-card__desc">Technické SEO a optimalizace výkonu zabudované od prvního dne. Organická návštěvnost, která roste měsíc za měsícem.</p>
+            <div class="service-card__footer">
+              <span class="service-card__tag">Core Web Vitals</span>
+              <span class="service-card__tag">Schema</span>
+              <span class="service-card__tag">Analytics</span>
+            </div>
           </div>
-          <h3 class="service-card__title">E-commerce</h3>
-          <p class="service-card__desc">Online obchody s maximální konverzí. Shopify, WooCommerce nebo vlastní řešení na míru.</p>
-          <span class="service-card__tag">Shopify · WooCommerce · Custom</span>
+          <div class="service-card__arrow">↗</div>
         </article>
+
+        <article class="service-card">
+          <div class="service-card__number">04</div>
+          <div class="service-card__body">
+            <h3 class="service-card__title">E-commerce</h3>
+            <p class="service-card__desc">Online obchody s maximální konverzí. Shopify, WooCommerce nebo vlastní řešení — volba závisí na vašich cílech.</p>
+            <div class="service-card__footer">
+              <span class="service-card__tag">Shopify</span>
+              <span class="service-card__tag">WooCommerce</span>
+              <span class="service-card__tag">Custom</span>
+            </div>
+          </div>
+          <div class="service-card__arrow">↗</div>
+        </article>
+
       </div>
     </div>
   </section>
@@ -137,38 +180,35 @@
   <!-- Process Section -->
   <section class="process" id="process">
     <div class="container">
-      <div class="section-header">
-        <p class="section-eyebrow">Jak pracujeme</p>
+      <div class="process__header">
+        <span class="section-eyebrow">Jak pracujeme</span>
         <h2 class="section-title">Od nápadu ke spuštění<br/>za 4 týdny</h2>
       </div>
-      <div class="process__steps">
-        <div class="process__step">
-          <div class="process__step-num">01</div>
-          <div class="process__step-content">
+      <div class="process__list">
+        <div class="process__item">
+          <span class="process__num">01</span>
+          <div class="process__content">
             <h3>Discovery</h3>
             <p>Poznáme váš byznys, cílové zákazníky a cíle. Výstup: brief a časový plán.</p>
           </div>
         </div>
-        <div class="process__connector"></div>
-        <div class="process__step">
-          <div class="process__step-num">02</div>
-          <div class="process__step-content">
+        <div class="process__item">
+          <span class="process__num">02</span>
+          <div class="process__content">
             <h3>Design</h3>
             <p>Wireframes, moodboard, finální design v Figmě. Dvě iterace jsou v ceně.</p>
           </div>
         </div>
-        <div class="process__connector"></div>
-        <div class="process__step">
-          <div class="process__step-num">03</div>
-          <div class="process__step-content">
+        <div class="process__item">
+          <span class="process__num">03</span>
+          <div class="process__content">
             <h3>Vývoj</h3>
             <p>Kódujeme s průběžným přístupem ke staging prostředí. Vidíte pokrok každý den.</p>
           </div>
         </div>
-        <div class="process__connector"></div>
-        <div class="process__step">
-          <div class="process__step-num">04</div>
-          <div class="process__step-content">
+        <div class="process__item">
+          <span class="process__num">04</span>
+          <div class="process__content">
             <h3>Spuštění</h3>
             <p>Deploy, SEO kontrola, rychlostní audit. Měsíc podpory zdarma po spuštění.</p>
           </div>
@@ -181,32 +221,50 @@
   <section class="work" id="work">
     <div class="container">
       <div class="section-header">
-        <p class="section-eyebrow">Vybrané projekty</p>
-        <h2 class="section-title">Naše práce mluví za nás</h2>
+        <span class="section-eyebrow">Vybrané projekty</span>
+        <h2 class="section-title">Naše práce<br/>mluví za nás</h2>
       </div>
       <div class="work__grid">
         <article class="work-card work-card--large">
-          <div class="work-card__bg" style="background: linear-gradient(135deg, #0a1628 0%, #0d3b6e 100%)"></div>
+          <div class="work-card__bg" style="background: linear-gradient(135deg, #090e1a 0%, #0d2a4e 50%, #0a1d36 100%)"></div>
+          <div class="work-card__overlay"></div>
           <div class="work-card__content">
-            <span class="work-card__category">E-commerce · Móda</span>
-            <h3 class="work-card__title">LuxWear Store</h3>
-            <p class="work-card__metric">+240% konverzí po redesignu</p>
+            <div class="work-card__meta">
+              <span class="work-card__num">001</span>
+              <span class="work-card__category">E-commerce · Móda</span>
+            </div>
+            <div class="work-card__bottom">
+              <h3 class="work-card__title">LuxWear Store</h3>
+              <span class="work-card__metric">+240% konverzí po redesignu →</span>
+            </div>
           </div>
         </article>
         <article class="work-card">
-          <div class="work-card__bg" style="background: linear-gradient(135deg, #0d1f0d 0%, #0a3d1a 100%)"></div>
+          <div class="work-card__bg" style="background: linear-gradient(135deg, #080f08 0%, #093019 100%)"></div>
+          <div class="work-card__overlay"></div>
           <div class="work-card__content">
-            <span class="work-card__category">SaaS · B2B</span>
-            <h3 class="work-card__title">FlowDesk</h3>
-            <p class="work-card__metric">3× rychlejší načítání</p>
+            <div class="work-card__meta">
+              <span class="work-card__num">002</span>
+              <span class="work-card__category">SaaS · B2B</span>
+            </div>
+            <div class="work-card__bottom">
+              <h3 class="work-card__title">FlowDesk</h3>
+              <span class="work-card__metric">3× rychlejší načítání →</span>
+            </div>
           </div>
         </article>
         <article class="work-card">
-          <div class="work-card__bg" style="background: linear-gradient(135deg, #1a0a2e 0%, #3d1a6e 100%)"></div>
+          <div class="work-card__bg" style="background: linear-gradient(135deg, #10080e 0%, #2d0e3a 100%)"></div>
+          <div class="work-card__overlay"></div>
           <div class="work-card__content">
-            <span class="work-card__category">Služby · Lokální firma</span>
-            <h3 class="work-card__title">ProServis CZ</h3>
-            <p class="work-card__metric">+180% organické návštěvnosti</p>
+            <div class="work-card__meta">
+              <span class="work-card__num">003</span>
+              <span class="work-card__category">Služby · Lokální</span>
+            </div>
+            <div class="work-card__bottom">
+              <h3 class="work-card__title">ProServis CZ</h3>
+              <span class="work-card__metric">+180% organické návštěvnosti →</span>
+            </div>
           </div>
         </article>
       </div>
@@ -215,31 +273,37 @@
 
   <!-- CTA / Contact Section -->
   <section class="contact" id="contact">
-    <div class="contact__inner">
-      <div class="contact__glow"></div>
-      <p class="section-eyebrow">Pojďme spolupracovat</p>
-      <h2 class="contact__title">Váš web je<br/>jeden hovor daleko.</h2>
-      <p class="contact__sub">Bezplatná 30minutová konzultace. Žádné závazky, žádný spam.</p>
-      <form class="contact__form" id="contact-form">
-        <div class="form__row">
-          <div class="form__field">
-            <label for="name">Jméno</label>
-            <input type="text" id="name" placeholder="Jan Novák" required />
+    <div class="container">
+      <div class="contact__inner">
+        <span class="section-eyebrow">Pojďme spolupracovat</span>
+        <h2 class="contact__title">
+          Váš web je<br/>
+          <em>jeden hovor</em><br/>
+          daleko.
+        </h2>
+        <p class="contact__sub">Bezplatná 30minutová konzultace. Žádné závazky, žádný spam.</p>
+
+        <form class="contact__form" id="contact-form">
+          <div class="form__row">
+            <div class="form__field">
+              <label for="name">Jméno</label>
+              <input type="text" id="name" placeholder="Jan Novák" required />
+            </div>
+            <div class="form__field">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" placeholder="jan@firma.cz" required />
+            </div>
           </div>
           <div class="form__field">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" placeholder="jan@firma.cz" required />
+            <label for="message">O čem mluvíme?</label>
+            <textarea id="message" rows="4" placeholder="Stručně popište váš projekt nebo situaci…"></textarea>
           </div>
-        </div>
-        <div class="form__field">
-          <label for="message">O čem mluvíme?</label>
-          <textarea id="message" rows="4" placeholder="Stručně popište váš projekt nebo situaci..."></textarea>
-        </div>
-        <button type="submit" class="btn btn--primary btn--large">
-          Odeslat a domluvit schůzku
-          <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><path d="M4 10h12M10 4l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </button>
-      </form>
+          <button type="submit" class="btn btn--primary btn--large">
+            Odeslat a domluvit schůzku
+            <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><path d="M4 10h12M10 4l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -248,8 +312,7 @@
     <div class="container">
       <div class="footer__top">
         <div class="footer__brand">
-          <img src="assets/logo.png" alt="SiteSpot" class="footer__logo" />
-          <span>SiteSpot</span>
+          SiteSpot<span class="footer__dot">.</span>
         </div>
         <nav class="footer__nav">
           <a href="#services">Služby</a>
@@ -259,7 +322,7 @@
         </nav>
       </div>
       <div class="footer__bottom">
-        <p>© 2025 SiteSpot. Všechna práva vyhrazena.</p>
+        <p>© 2026 SiteSpot. Všechna práva vyhrazena.</p>
         <p>Navrženo & vyvinuto s precizností.</p>
       </div>
     </div>

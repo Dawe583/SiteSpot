@@ -49,7 +49,7 @@
         color: #eef2f7;
       }
       .nav-burger {
-        display: flex !important;
+        display: flex;
         flex-direction: column;
         gap: 6px;
         background: none;
@@ -72,17 +72,19 @@
   `;
   document.head.appendChild(mobileStyle);
 
-  // Create burger button dynamically
+  // Hide burger on desktop by default
+  const burgerDesktopStyle = document.createElement('style');
+  burgerDesktopStyle.textContent = '.nav-burger { display: none !important; }';
+  document.head.insertBefore(burgerDesktopStyle, document.head.firstChild);
+
+  // Create burger button — only insert into DOM on mobile
   const burger = document.createElement('button');
   burger.className = 'nav-burger';
   burger.setAttribute('aria-label', 'Toggle menu');
   burger.innerHTML = '<span></span><span></span><span></span>';
-  // Insert between nav-links and nav-cta (or at end of nav)
-  const navCta = $('.nav-cta');
-  if (navCta) {
-    nav.insertBefore(burger, navCta);
-  } else {
-    nav.appendChild(burger);
+  if (window.innerWidth <= 768) {
+    const navCta = $('.nav-cta');
+    if (navCta) { nav.insertBefore(burger, navCta); } else { nav.appendChild(burger); }
   }
 
   function closeMenu() {

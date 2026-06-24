@@ -8,6 +8,18 @@
 
   if (window.innerWidth <= 768) { initHover(); return; }
 
+  /* ── Skip panel mode on subpages (no main sections) ─────── */
+  const hasMainSections = !!(document.getElementById('hero') && document.getElementById('work'));
+  if (!hasMainSections) {
+    // Still run hover effects and reveal on subpages
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+    initHover();
+    return;
+  }
+
   /* ── Config ─────────────────────────────────────────────── */
   const ANIM_MS     = 900;
   const WHEEL_THRESH = 200;

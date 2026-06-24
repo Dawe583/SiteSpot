@@ -419,3 +419,182 @@
   .tpl-grid { grid-template-columns: 1fr; }
   .tpl-hero { flex-direction: column; align-items: flex-start; }
 }
+/* ── NEW STYLE VARIANTS ────────────────────────────────────── */
+.style-g { background: linear-gradient(145deg, #0a0f1a 0%, #0f1525 100%); }
+.style-h { background: linear-gradient(145deg, #0d0a1f 0%, #160f35 100%); }
+.style-i { background: linear-gradient(145deg, #0a150f 0%, #0e2018 100%); }
+
+/* ── EXTENDED MOCKUP ELEMENTS ──────────────────────────────── */
+
+/* Badge line above headline */
+.mockup__badge-line {
+  width: 30%; height: 5px; border-radius: 10px;
+  background: rgba(39,183,165,0.3);
+  margin-bottom: 8px;
+}
+
+/* Button row */
+.mockup__btn-row { display: flex; gap: 6px; margin-top: 4px; }
+.mockup__btn.ghost {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.mockup__btn.sm { width: 20%; height: 7px; }
+
+/* Logos row */
+.mockup__logos-row {
+  display: flex; gap: 6px;
+  padding: 6px 0;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.mockup__logo-chip {
+  flex: 1; height: 6px; border-radius: 3px;
+  background: rgba(255,255,255,0.08);
+}
+
+/* Icon-top feat card */
+.mockup__feat-card.icon-top {
+  height: 34px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.07);
+  position: relative;
+}
+.mockup__feat-card.icon-top::before {
+  content: ''; position: absolute;
+  top: 5px; left: 5px;
+  width: 8px; height: 8px; border-radius: 2px;
+  background: rgba(39,183,165,0.4);
+}
+
+/* Split hero */
+.mockup__split-hero { display: flex; gap: 8px; padding: 8px 0 4px; }
+.mockup__split-text { flex: 1.2; display: flex; flex-direction: column; }
+.mockup__split-img { flex: 1; border-radius: 3px; background: rgba(255,255,255,0.08); min-height: 40px; }
+
+/* Taller product cards */
+.mockup__prod-card.tall { height: 42px; }
+
+/* Masonry layout */
+.mockup__work-masonry { display: flex; gap: 5px; margin-top: 4px; }
+.mockup__mason-card { border-radius: 2px; background: rgba(255,255,255,0.08); }
+.mockup__mason-card.tall { flex: 1.5; height: 50px; }
+.mockup__mason-col { display: flex; flex-direction: column; gap: 5px; flex: 1; }
+.mockup__mason-card.sm { height: 22px; }
+.mockup__big-text.accent { background: rgba(39,183,165,0.3); }
+.mockup__big-text.w-third { width: 35%; }
+
+/* Centered hero */
+.mockup__hero.centered { align-items: center; }
+.mockup__eyebrow {
+  width: 25%; height: 4px; border-radius: 2px;
+  background: rgba(39,183,165,0.35);
+  margin-bottom: 6px;
+}
+.mockup__line.mx-auto { margin-left: auto; margin-right: auto; }
+.mockup__btn.mx-auto { margin: 4px auto 0; }
+
+/* Services grid */
+.mockup__services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 2px; }
+.mockup__svc-card { height: 22px; border-radius: 2px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.05); }
+
+/* Editorial hero */
+.mockup__hero.editorial { padding-bottom: 4px; }
+.mockup__cat-tag {
+  width: 20%; height: 5px; border-radius: 10px;
+  background: rgba(39,183,165,0.3);
+  margin-bottom: 6px;
+}
+.mockup__line.w-90 { width: 90%; }
+
+/* Blog featured */
+.mockup__blog-featured { display: flex; gap: 5px; }
+.mockup__blog-img { flex: 1.4; height: 36px; border-radius: 2px; background: rgba(255,255,255,0.1); }
+.mockup__blog-list { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.mockup__blog-item { height: 10px; border-radius: 1px; background: rgba(255,255,255,0.07); }
+
+/* Fullscreen img hero */
+.mockup__hero.fullscreen-img {
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  min-height: 44px;
+  padding: 8px;
+  justify-content: flex-end;
+}
+.mockup__overlay-text { display: flex; flex-direction: column; }
+
+/* Menu preview */
+.mockup__menu-preview { margin-top: 4px; }
+.mockup__menu-section { display: flex; flex-direction: column; gap: 3px; }
+.mockup__menu-title { width: 25%; height: 5px; border-radius: 2px; background: rgba(39,183,165,0.4); margin-bottom: 3px; }
+.mockup__menu-row { height: 6px; border-radius: 1px; background: rgba(255,255,255,0.08); display: flex; justify-content: space-between; }
+.mockup__menu-row.short { width: 70%; }
+
+/* Side-by-side hero */
+.mockup__hero.side-by-side { flex-direction: row; align-items: center; gap: 8px; padding: 6px 0; }
+.mockup__avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(39,183,165,0.3); flex-shrink: 0; }
+.mockup__side-text { flex: 1; display: flex; flex-direction: column; }
+.mockup__skill-chips { display: flex; gap: 3px; margin-top: 4px; }
+.mockup__chip { width: 18%; height: 5px; border-radius: 10px; background: rgba(255,255,255,0.1); }
+
+/* Project list */
+.mockup__project-list { display: flex; flex-direction: column; gap: 4px; }
+.mockup__proj-row { height: 9px; border-radius: 1px; background: rgba(255,255,255,0.07); border-bottom: 1px solid rgba(255,255,255,0.04); }
+
+/* Gradient hero */
+.mockup__hero.gradient-hero { position: relative; align-items: center; min-height: 40px; }
+.mockup__glow-blob {
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+  width: 60%; height: 40px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(39,183,165,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Input row */
+.mockup__input-row { display: flex; gap: 4px; margin-top: 4px; justify-content: center; }
+.mockup__input-field { flex: 1.8; height: 8px; border-radius: 2px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.12); }
+
+/* Dashboard */
+.mockup__dashboard-preview { display: flex; gap: 4px; margin-top: 4px; }
+.mockup__dash-card { flex: 1; height: 18px; border-radius: 2px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.07); }
+.mockup__dash-card.wide { flex: 2; }
+
+/* Search hero */
+.mockup__search-hero { padding: 8px 0 6px; }
+.mockup__search-bar { display: flex; gap: 4px; margin-top: 4px; }
+.mockup__search-input { flex: 1; height: 9px; border-radius: 2px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); }
+
+/* Property grid */
+.mockup__property-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; }
+.mockup__prop-card { display: flex; flex-direction: column; gap: 3px; }
+.mockup__prop-img { height: 20px; border-radius: 2px; background: rgba(255,255,255,0.09); }
+.mockup__prop-info { height: 7px; border-radius: 1px; background: rgba(255,255,255,0.06); }
+
+/* Update grid to 3 cols and handle 9 cards */
+@media (max-width: 1100px) {
+  .tpl-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Footer — centered layout for subpage ─────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 3rem;
+  text-align: center;
+}
+.footer-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.footer-top > div { text-align: center; }
+.footer-nav { justify-content: center; }
+.footer-socials { justify-content: center; }
+.footer-bottom {
+  justify-content: center;
+  gap: 1.5rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  flex-wrap: wrap;
+}

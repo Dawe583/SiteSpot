@@ -10,6 +10,37 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/templates.css" />
+  <style>
+    /* ── CUSTOM CURSOR ─────────────────────────────────────── */
+    @media(pointer:fine){
+      *{cursor:none !important}
+    }
+    #cur-ring{
+      position:fixed;width:36px;height:36px;border-radius:50%;
+      border:1.5px solid rgba(39,183,165,0.7);
+      pointer-events:none;z-index:99999;
+      transform:translate(-50%,-50%);
+      transition:width .35s var(--ease),height .35s var(--ease),
+                 border-color .35s,background .35s,opacity .3s;
+      mix-blend-mode:normal;
+    }
+    #cur-dot{
+      position:fixed;width:5px;height:5px;border-radius:50%;
+      background:var(--accent);pointer-events:none;z-index:99999;
+      transform:translate(-50%,-50%);
+      transition:transform .1s,opacity .3s;
+    }
+    #cur-ring.hover{
+      width:56px;height:56px;
+      background:rgba(39,183,165,0.08);
+      border-color:var(--accent-2);
+    }
+    #cur-ring.click{
+      width:26px;height:26px;
+      background:rgba(39,183,165,0.18);
+    }
+    @media(pointer:coarse){#cur-ring,#cur-dot{display:none}}
+  </style>
 </head>
 <body>
 
@@ -934,8 +965,46 @@
     </div>
   </div>
 
+  <div id="cur-ring"></div>
+  <div id="cur-dot"></div>
+
   <script src="js/main.js"></script>
   <script src="js/templates.js?v=4"></script>
   <script src="js/animations.js"></script>
+
+  <!-- Self-contained custom cursor (nezávislé na main.js) -->
+  <script>
+  (function(){
+    if (!window.matchMedia || !window.matchMedia('(pointer:fine)').matches) return;
+    var ring = document.getElementById('cur-ring');
+    var dot  = document.getElementById('cur-dot');
+    if (!ring || !dot) return;
+
+    var mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', function(e){
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px';
+      dot.style.top  = my + 'px';
+    });
+
+    (function loop(){
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(loop);
+    })();
+
+    var hoverEls = 'a, button, [role="button"], .work-item, .service-item, .tpl-card';
+    document.addEventListener('mouseover', function(e){
+      if (e.target.closest(hoverEls)) ring.classList.add('hover');
+    });
+    document.addEventListener('mouseout', function(e){
+      if (e.target.closest(hoverEls)) ring.classList.remove('hover');
+    });
+    document.addEventListener('mousedown', function(){ ring.classList.add('click'); });
+    document.addEventListener('mouseup',   function(){ ring.classList.remove('click'); });
+  })();
+  </script>
 </body>
 </html>

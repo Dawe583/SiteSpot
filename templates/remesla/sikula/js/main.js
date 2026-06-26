@@ -1,7 +1,4 @@
-/* ============================================================
-   BUCHTA — sdílený JS pro všechny stránky
-   Každá funkce si hlídá existenci prvků → jeden soubor všude.
-   ============================================================ */
+
 (function () {
   'use strict';
 

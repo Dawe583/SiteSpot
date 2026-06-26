@@ -440,6 +440,212 @@ footer{border-top:none;padding:0;max-width:unset;margin:0}
 </head>
 <body>
 
+<script>
+/* ── i18n: překlad CZ ↔ EN podle IP ─────────────────────────────
+   Volá /api/locale → pokud není CZ, přepíše texty na angličtinu.
+   Spouští se co nejdříve (inline, synchronně), ale protože fetch
+   je async, texty se přepíší těsně po DOMContentLoaded — vizuálně
+   nezpozorovatelné (stránka je ještě skrytá za animacemi).        */
+(function () {
+  const EN = {
+    /* <title> */
+    title: 'SiteSpot — Creative Digital Experiences',
+    /* <meta description> */
+    metaDesc: 'SiteSpot is a digital agency creating websites and digital experiences for businesses that want to be seen.',
+    /* NAV */
+    navTemplates: 'Templates',
+    navCta: 'Start a project',
+    /* HERO */
+    heroLine1: 'Websites that',
+    heroLine2: 'sell',
+    heroLine3: 'for you.',
+    heroSub: 'We design and develop digital experiences for businesses that want to be seen — and remembered.',
+    heroCta: 'Start a project',
+    heroWork: 'Our work',
+    /* WORK */
+    workEyebrow: 'Selected projects',
+    workH2: 'Our work',
+    workDesc: 'We are a team passionate about turning ideas into digital reality — project by project.',
+    workType3: 'Corporate · Local',
+    workType4: 'Presentation · Retail',
+    /* SERVICES */
+    servicesH2: 'We are an unusual\ndigital agency.',
+    servicesDesc: 'We focus on turning your vision into a compelling digital experience — with precision, taste, and measurable results.',
+    s1Tags: ['Logo & visual identity', 'Typography', 'Color palette', 'Brand guidelines'],
+    s1Desc: 'We build a consistent brand voice that reflects your company\'s values and goals at every touchpoint.',
+    s2Tags: ['Web development', 'App Development', 'UI/UX Design', 'Headless CMS'],
+    s2Desc: 'We work closely with you to understand your vision and deliver results that exceed expectations.',
+    s3Tags: ['SEO & Content', 'Social Media', 'Email Marketing', 'Analytics'],
+    s3Desc: 'Effective marketing goes beyond promotion — it\'s about understanding your customer and sustainable growth.',
+    s4Tags: ['Shopify & Custom', 'Conversion optimisation', 'Product photography', 'Payment gateways'],
+    s4Desc: 'Online stores designed for maximum conversion — from the first visit to repeat purchase.',
+    /* CTA BAND */
+    ctaTitle1: "Don't be afraid",
+    ctaTitle2: 'to reach out.',
+    ctaStartProject: 'Start a project',
+    ctaViewWork: 'View work',
+    /* CONTACT */
+    contactEyebrow: 'Contact',
+    contactH2: 'Your website is\none call\naway.',
+    contactDesc: 'Free 30-minute no-obligation consultation. We\'ll tell you honestly what makes sense for you — and what doesn\'t.',
+    contactLocation: 'Pilsen, Czech Republic',
+    labelName: 'Name',
+    labelEmail: 'E-mail',
+    labelCompany: 'Company',
+    labelMessage: 'Message',
+    placeholderName: 'John Smith',
+    placeholderEmail: 'john@company.com',
+    placeholderCompany: 'Company name (optional)',
+    placeholderMessage: 'Describe your project or situation...',
+    submitBtn: 'Send message',
+    /* FOOTER */
+    footerTagline1: 'Digital agency',
+    footerTagline2: 'from',
+    footerTaglineCity: 'Pilsen.',
+    footerCta: 'Get in touch',
+    statLabel1: 'Projects',
+    statLabel2: 'Years of experience',
+    statLabel3: 'Satisfaction',
+    statLabel4: 'Response',
+    footerTemplates: 'Templates',
+    footerCopy: '© 2025 SiteSpot. All rights reserved.',
+    footerMade: 'Designed & developed in Pilsen.',
+    /* JS strings (form feedback etc.) */
+    formSending: 'Sending…',
+    formSent: 'Message sent!',
+    formThanks: (name) => `We\'ll get back to you within 24 hours. Thanks, ${name}!`,
+    formNetErr: 'Network error. Please try again or write directly to hello@sitespot.cz',
+  };
+
+  function applyEN() {
+    const d = document;
+
+    // title + meta
+    d.title = EN.title;
+    const metaEl = d.querySelector('meta[name="description"]');
+    if (metaEl) metaEl.content = EN.metaDesc;
+    d.documentElement.lang = 'en';
+
+    // NAV
+    const tplNavLink = [...d.querySelectorAll('.nav-links a')].find(a => a.getAttribute('href') === 'templates.html');
+    if (tplNavLink) tplNavLink.textContent = EN.navTemplates;
+    const navCta = d.querySelector('.nav-cta');
+    if (navCta) navCta.textContent = EN.navCta;
+
+    // HERO
+    const hh = d.querySelector('.hero-headline');
+    if (hh) hh.innerHTML = `${EN.heroLine1}<br/><em>${EN.heroLine2}</em><br/>${EN.heroLine3}`;
+    const hs = d.querySelector('.hero-sub');
+    if (hs) hs.textContent = EN.heroSub;
+    const heroActions = d.querySelectorAll('.hero-actions a');
+    if (heroActions[0]) heroActions[0].innerHTML = `${EN.heroCta}<svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+    if (heroActions[1]) heroActions[1].textContent = EN.heroWork;
+
+    // WORK
+    const workEyebrow = d.querySelector('.work-header .eyebrow');
+    if (workEyebrow) workEyebrow.textContent = EN.workEyebrow;
+    const workH2 = d.querySelector('.work-header-left h2');
+    if (workH2) workH2.textContent = EN.workH2;
+    const workRight = d.querySelector('.work-header-right');
+    if (workRight) workRight.textContent = EN.workDesc;
+    // Translate CZ-specific work types
+    const workItems = d.querySelectorAll('.work-item');
+    if (workItems[2]) {
+      const t = workItems[2].querySelector('.work-type');
+      if (t) t.textContent = EN.workType3;
+    }
+    if (workItems[3]) {
+      const t = workItems[3].querySelector('.work-type');
+      if (t) t.textContent = EN.workType4;
+    }
+
+    // SERVICES
+    const svcH2 = d.querySelector('.services-intro h2');
+    if (svcH2) svcH2.innerHTML = EN.servicesH2.replace('\n', '<br/>');
+    const svcDesc = d.querySelector('.services-intro p');
+    if (svcDesc) svcDesc.textContent = EN.servicesDesc;
+
+    const svcItems = d.querySelectorAll('.service-item');
+    [[EN.s1Tags, EN.s1Desc], [EN.s2Tags, EN.s2Desc], [EN.s3Tags, EN.s3Desc], [EN.s4Tags, EN.s4Desc]]
+      .forEach(([tags, desc], i) => {
+        const item = svcItems[i];
+        if (!item) return;
+        const lis = item.querySelectorAll('.service-tags li');
+        tags.forEach((t, j) => { if (lis[j]) lis[j].textContent = t; });
+        const p = item.querySelector('.service-desc');
+        if (p) p.textContent = desc;
+      });
+
+    // CTA BAND
+    const ctaTitle = d.querySelector('.cta-title');
+    if (ctaTitle) ctaTitle.innerHTML = `${EN.ctaTitle1}<br/><em>${EN.ctaTitle2}</em>`;
+    const ctaActions = d.querySelectorAll('.cta-actions a');
+    if (ctaActions[0]) ctaActions[0].innerHTML = `${EN.ctaStartProject}<svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+    if (ctaActions[1]) ctaActions[1].textContent = EN.ctaViewWork;
+
+    // CONTACT
+    const cEyebrow = d.querySelector('.contact-info .eyebrow');
+    if (cEyebrow) cEyebrow.textContent = EN.contactEyebrow;
+    const cH2 = d.querySelector('.contact-info h2');
+    if (cH2) cH2.innerHTML = EN.contactH2.replace(/\n/g, '<br/>');
+    const cDesc = d.querySelector('.contact-info > p');
+    if (cDesc) cDesc.textContent = EN.contactDesc;
+    const cMeta = d.querySelectorAll('.contact-meta span');
+    if (cMeta[1]) cMeta[1].textContent = EN.contactLocation;
+
+    // FORM labels & placeholders
+    const fName = d.getElementById('name');
+    const fEmail = d.getElementById('email');
+    const fCompany = d.getElementById('company');
+    const fMessage = d.getElementById('message');
+    if (fName) { fName.placeholder = EN.placeholderName; }
+    if (fEmail) { fEmail.placeholder = EN.placeholderEmail; }
+    if (fCompany) { fCompany.placeholder = EN.placeholderCompany; }
+    if (fMessage) { fMessage.placeholder = EN.placeholderMessage; }
+    const fLabels = d.querySelectorAll('.form-field label');
+    const labelMap = { name: EN.labelName, email: EN.labelEmail, company: EN.labelCompany, message: EN.labelMessage };
+    fLabels.forEach(lbl => {
+      const forAttr = lbl.getAttribute('for');
+      if (labelMap[forAttr]) lbl.textContent = labelMap[forAttr];
+    });
+    const submitBtn = d.querySelector('#contact-form [type="submit"]');
+    if (submitBtn) submitBtn.innerHTML = `${EN.submitBtn}<svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+
+    // FOOTER
+    const ftag = d.querySelector('.footer-tagline');
+    if (ftag) ftag.innerHTML = `${EN.footerTagline1}<br/>${EN.footerTagline2} <em>${EN.footerTaglineCity}</em>`;
+    const fCta = d.querySelector('.footer-cta');
+    if (fCta) fCta.innerHTML = `${EN.footerCta}<svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+    const statLabels = d.querySelectorAll('.footer-stat-label');
+    [EN.statLabel1, EN.statLabel2, EN.statLabel3, EN.statLabel4].forEach((t, i) => {
+      if (statLabels[i]) statLabels[i].textContent = t;
+    });
+    const footerNavLinks = d.querySelectorAll('.footer-nav a');
+    footerNavLinks.forEach(a => { if (a.getAttribute('href') === 'templates.html') a.textContent = EN.footerTemplates; });
+    const footerBottom = d.querySelectorAll('.footer-bottom span');
+    if (footerBottom[0]) footerBottom[0].textContent = EN.footerCopy;
+    if (footerBottom[1]) footerBottom[1].textContent = EN.footerMade;
+
+    // Expose EN strings for form JS (form submit replaces button text)
+    window._i18n = EN;
+  }
+
+  // Fetch locale and apply EN if not CZ
+  fetch('/api/locale')
+    .then(r => r.json())
+    .then(data => {
+      if (data.country !== 'CZ') {
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', applyEN);
+        } else {
+          applyEN();
+        }
+      }
+    })
+    .catch(() => { /* chyba → ponechat češtinu */ });
+})();
+</script>
+
 <canvas id="bg-canvas"></canvas>
 <div id="bg-overlay" aria-hidden="true"></div>
 <div class="bg-noise" aria-hidden="true"></div>
@@ -780,7 +986,7 @@ footer{border-top:none;padding:0;max-width:unset;margin:0}
       const btn=form.querySelector('[type=submit]');
       const origHTML=btn.innerHTML;
       btn.disabled=true;
-      btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" opacity=".25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur=".8s" repeatCount="indefinite"/></path></svg> Odesílám…';
+      btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" opacity=".25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur=".8s" repeatCount="indefinite"/></path></svg> '+(window._i18n?window._i18n.formSending:'Odesílám…');
 
       const data={
         name,
@@ -798,7 +1004,7 @@ footer{border-top:none;padding:0;max-width:unset;margin:0}
         const json=await res.json();
 
         if(json.ok){
-          form.innerHTML=`<div style="padding:3rem 2rem;text-align:center;border:1px solid rgba(39,183,165,.25);border-radius:8px;background:rgba(39,183,165,.05)"><svg viewBox="0 0 48 48" fill="none" width="48" height="48" style="margin:0 auto 1.5rem;display:block"><circle cx="24" cy="24" r="22" stroke="#27b7a5" stroke-width="1.5"/><path d="M14 24l7 7 13-13" stroke="#27b7a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p style="font-size:1.1rem;font-weight:700;color:#eef2f7;margin-bottom:.5rem">Zpráva odeslána!</p><p style="color:#7da8c4;font-size:.95rem">${json.message}</p></div>`;
+          form.innerHTML=`<div style="padding:3rem 2rem;text-align:center;border:1px solid rgba(39,183,165,.25);border-radius:8px;background:rgba(39,183,165,.05)"><svg viewBox="0 0 48 48" fill="none" width="48" height="48" style="margin:0 auto 1.5rem;display:block"><circle cx="24" cy="24" r="22" stroke="#27b7a5" stroke-width="1.5"/><path d="M14 24l7 7 13-13" stroke="#27b7a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p style="font-size:1.1rem;font-weight:700;color:#eef2f7;margin-bottom:.5rem">${window._i18n?window._i18n.formSent:'Zpráva odeslána!'}</p><p style="color:#7da8c4;font-size:.95rem">${json.message}</p></div>`;
         } else {
           btn.disabled=false;
           btn.innerHTML=origHTML;
@@ -812,7 +1018,7 @@ footer{border-top:none;padding:0;max-width:unset;margin:0}
         btn.innerHTML=origHTML;
         let errEl=form.querySelector('.form-error');
         if(!errEl){errEl=document.createElement('p');errEl.className='form-error';errEl.style.cssText='color:#ff6b6b;font-size:.85rem;margin-top:.75rem;text-align:center';form.appendChild(errEl);}
-        errEl.textContent='Chyba sítě. Zkuste to znovu nebo napište přímo na hello@sitespot.cz';
+        errEl.textContent=window._i18n?window._i18n.formNetErr:'Chyba sítě. Zkuste to znovu nebo napište přímo na hello@sitespot.cz';
       }
     });
   }

@@ -58,6 +58,26 @@ function esc(str = '') {
     .slice(0, 1000); // max délka pole
 }
 
+// ── GET /api/locale ──────────────────────────────────────
+// Vrátí zemi uživatele podle jeho IP adresy
+app.get('/api/locale', async (req, res) => {
+  const ip = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress;
+
+  // Lokální / privátní IP → fallback na češtinu
+  const isPrivate = /^(::1|127\.|10\.|172\.(1[6-9]|2\d|3[01])\.|192\.168\.)/.test(ip);
+  if (isPrivate) {
+    return res.json({ country: 'CZ' });
+  }
+
+  try {
+    const response = await fetch(`https://ipapi.co/${ip}/country/`);
+    const country = (await response.text()).trim();
+    res.json({ country: country || 'XX' });
+  } catch {
+    res.json({ country: 'XX' });
+  }
+});
+
 // ── POST /api/contact ─────────────────────────────────────
 app.post('/api/contact', async (req, res) => {
   const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress;

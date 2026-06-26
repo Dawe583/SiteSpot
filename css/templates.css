@@ -598,144 +598,121 @@ footer {
   padding-top: 1.5rem;
   flex-wrap: wrap;
 }
-
-/* ============================================================
-   LIVE PREVIEW (skutečná šablona v kartě, zmenšená)
-   ============================================================ */
-.tpl-card[data-url] { cursor: pointer; }
-
-.tpl-card__frame {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: var(--surface);
-  transition: transform 0.5s var(--ease);
-}
-.tpl-card:hover .tpl-card__frame { transform: scale(1.04); }
-
-/* iframe se vykreslí ve 4× velikosti (desktop layout) a zmenší na 25 % → vyplní kartu */
-.tpl-card__frame iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 400%;
-  height: 400%;
-  border: 0;
-  transform: scale(0.25);
-  transform-origin: top left;
-  pointer-events: none;
-  background: #F4EDE0;
-}
-
-/* ============================================================
-   PREVIEW MODAL (rámeček prohlížeče + iframe)
-   ============================================================ */
-.tpl-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3vh 3vw;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.35s, visibility 0.35s;
-}
-.tpl-modal.open { opacity: 1; visibility: visible; }
-
-.tpl-modal__backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.78);
-  backdrop-filter: blur(6px);
-}
-
-.tpl-modal__window {
+/* ── TEMPLATE CAROUSEL ─────────────────────────────────── */
+.tpl-carousel {
   position: relative;
-  width: min(1180px, 94vw);
-  height: min(86vh, 820px);
-  display: flex;
-  flex-direction: column;
-  background: var(--surface);
-  border: 1px solid var(--border-2);
-  border-radius: 10px;
+  max-width: 920px;
+  margin: 4rem auto;
+  padding: 0 1.5rem;
+}
+
+.tpl-carousel__viewport {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
-  transform: translateY(16px) scale(0.985);
-  transition: transform 0.35s var(--ease);
-}
-.tpl-modal.open .tpl-modal__window { transform: none; }
-
-.tpl-modal__bar {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.7rem 1rem;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-}
-.tpl-modal__dots { display: flex; gap: 6px; flex-shrink: 0; }
-.tpl-modal__dots i { width: 11px; height: 11px; border-radius: 50%; display: block; }
-.tpl-modal__dots i:nth-child(1) { background: #ff5f57; }
-.tpl-modal__dots i:nth-child(2) { background: #febc2e; }
-.tpl-modal__dots i:nth-child(3) { background: #28c840; }
-
-.tpl-modal__url {
-  flex: 1;
-  min-width: 0;
-  font-family: 'Space Mono', ui-monospace, monospace;
-  font-size: 0.74rem;
-  color: var(--gray);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.4rem 0.9rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: center;
 }
 
-.tpl-modal__open {
-  flex-shrink: 0;
-  font-family: var(--font-sans);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
+/* Každý slide leží přes sebe; aktivní se odkryje */
+.tpl-carousel__slide {
+  position: absolute;
+  inset: 0;
+  display: block;
   text-decoration: none;
-  border: 1px solid var(--accent);
-  padding: 0.42rem 0.85rem;
-  border-radius: 3px;
-  white-space: nowrap;
-  transition: all 0.2s;
+  color: var(--white);
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.04);
+  transition:
+    opacity   .8s var(--ease),
+    transform .8s var(--ease),
+    visibility 0s linear .8s;
+  will-change: opacity, transform;
 }
-.tpl-modal__open:hover { background: var(--accent); color: var(--bg); }
 
-.tpl-modal__close {
-  flex-shrink: 0;
-  background: none;
-  border: none;
-  color: var(--gray);
-  font-size: 1.6rem;
-  line-height: 1;
-  width: 34px;
-  height: 34px;
+.tpl-carousel__slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition:
+    opacity   .8s var(--ease),
+    transform .8s var(--ease),
+    visibility 0s;
+  z-index: 2;
+}
+
+.tpl-carousel__media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.tpl-carousel__media iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  pointer-events: none;          /* klik řeší celý <a> */
+  background: var(--bg-2);
+}
+
+.tpl-carousel__caption {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 3;
+  padding: 2.2rem 1.6rem 1.4rem;
+  background: linear-gradient(to top,
+              rgba(7,10,15,0.92) 0%,
+              rgba(7,10,15,0.55) 55%,
+              transparent 100%);
+}
+
+.tpl-carousel__cat {
+  display: block;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin-bottom: .35rem;
+}
+
+.tpl-carousel__name {
+  font-family: var(--font-sans);
+  font-size: clamp(1.05rem, 2.4vw, 1.45rem);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Tečková navigace */
+.tpl-carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: .55rem;
+  margin-top: 1.4rem;
+}
+
+.tpl-carousel__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  border: 0;
+  padding: 0;
   cursor: pointer;
-  border-radius: 4px;
-  transition: color 0.2s, background 0.2s;
+  background: var(--border-2);
+  transition: background .3s var(--ease), transform .3s var(--ease);
 }
-.tpl-modal__close:hover { color: var(--white); background: var(--border); }
 
-.tpl-modal__body { flex: 1; background: #fff; overflow: hidden; }
-.tpl-modal__frame { width: 100%; height: 100%; border: 0; display: block; }
+.tpl-carousel__dot.is-active {
+  background: var(--accent);
+  transform: scale(1.35);
+}
 
-@media (max-width: 640px) {
-  .tpl-modal { padding: 0; }
-  .tpl-modal__window { width: 100vw; height: 100vh; border-radius: 0; border: none; }
-  .tpl-modal__open { font-size: 0; padding: 0.42rem 0.6rem; }
-  .tpl-modal__open::before { content: '↗'; font-size: 0.95rem; }
+@media (max-width: 600px) {
+  .tpl-carousel__viewport { aspect-ratio: 4 / 5; }
+  .tpl-carousel { margin: 2.5rem auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tpl-carousel__slide { transition: opacity .3s linear; transform: none; }
+  .tpl-carousel__slide.is-active { transform: none; }
 }

@@ -3,30 +3,7 @@
   'use strict';
 
   const filters = document.querySelectorAll('.tpl-filter');
-
-  /* ── Zamíchat pořadí designů v rámci každého odvětví ──────────
-     Jinak má každé odvětví stejnou posloupnost stylů (editoriál →
-     cinematic → brutalist → …), což působí šablonovitě. Skupiny
-     (odvětví) zůstávají pohromadě, mění se jen pořadí karet uvnitř. */
-  (function shuffleWithinCategories() {
-    const grid = document.querySelector('.tpl-grid');
-    if (!grid) return;
-    const groups = new Map();
-    grid.querySelectorAll('.tpl-card').forEach(card => {
-      const cat = card.dataset.cat || '_';
-      if (!groups.has(cat)) groups.set(cat, []);
-      groups.get(cat).push(card);
-    });
-    groups.forEach(list => {
-      for (let i = list.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [list[i], list[j]] = [list[j], list[i]];
-      }
-      list.forEach(card => grid.appendChild(card));
-    });
-  })();
-
-  const cards = document.querySelectorAll('.tpl-card');
+  const cards   = document.querySelectorAll('.tpl-card');
 
   filters.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -50,42 +27,63 @@
     });
   });
 
-  /* ── PREVIEW MODAL ─────────────────────────────────────────── */
-  const modal = document.getElementById('tplModal');
-  if (modal) {
-    const frame   = document.getElementById('tplModalFrame');
-    const urlEl   = document.getElementById('tplModalUrl');
-    const openEl  = document.getElementById('tplModalOpen');
+})();
+/* ── TEMPLATE CAROUSEL (izolováno, nezasahuje do filtrů ani cursor trackeru) ── */
+(function () {
+  'use strict';
 
-    function openModal(url, host) {
-      frame.src = url;
-      urlEl.textContent = host || url;
-      openEl.href = url;
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeModal() {
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      // vyprázdnit iframe → zastaví přehrávání/načítání šablony na pozadí
-      setTimeout(() => { if (!modal.classList.contains('open')) frame.src = 'about:blank'; }, 350);
-    }
+  // ⚙️ Rychlost rotace (ms) — uprav podle potřeby
+  const ROTATE_INTERVAL = 4000;
 
-    // Klik na kartu (nebo její tlačítko) s data-url → otevři náhled
-    cards.forEach(card => {
-      const url = card.dataset.url;
-      if (!url) return;
-      card.addEventListener('click', () => openModal(url, card.dataset.host));
-    });
+  const root = document.getElementById('tplCarousel');
+  if (!root) return;
 
-    modal.querySelectorAll('[data-tpl-close]').forEach(el =>
-      el.addEventListener('click', closeModal)
-    );
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-    });
+  const slides = Array.from(root.querySelectorAll('.tpl-carousel__slide'));
+  if (slides.length < 2) return;
+
+  const dotsWrap = root.querySelector('.tpl-carousel__dots');
+  let index = slides.findIndex(s => s.classList.contains('is-active'));
+  if (index < 0) index = 0;
+  let timer = null;
+
+  const dots = slides.map((_, i) => {
+    if (!dotsWrap) return null;
+    const dot = document.createElement('button');
+    dot.className = 'tpl-carousel__dot' + (i === index ? ' is-active' : '');
+    dot.type = 'button';
+    dot.setAttribute('aria-label', 'Šablona ' + (i + 1));
+    dot.addEventListener('click', () => { goTo(i); restart(); });
+    dotsWrap.appendChild(dot);
+    return dot;
+  });
+
+  function goTo(next) {
+    slides[index].classList.remove('is-active');
+    if (dots[index]) dots[index].classList.remove('is-active');
+    index = (next + slides.length) % slides.length;
+    slides[index].classList.add('is-active');
+    if (dots[index]) dots[index].classList.add('is-active');
   }
 
+  const advance = () => goTo(index + 1);
+
+  function start() {
+    if (timer) return;
+    timer = setInterval(advance, ROTATE_INTERVAL);
+  }
+  function stop() {
+    clearInterval(timer);
+    timer = null;
+  }
+  const restart = () => { stop(); start(); };
+
+  // UX: hover pozastaví, odjezd obnoví
+  root.addEventListener('mouseenter', stop);
+  root.addEventListener('mouseleave', start);
+
+  // Pauza když není záložka aktivní
+  document.addEventListener('visibilitychange', () =>
+    document.hidden ? stop() : start());
+
+  start();
 })();

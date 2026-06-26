@@ -598,121 +598,351 @@ footer {
   padding-top: 1.5rem;
   flex-wrap: wrap;
 }
-/* ── TEMPLATE CAROUSEL ─────────────────────────────────── */
-.tpl-carousel {
-  position: relative;
-  max-width: 920px;
-  margin: 4rem auto;
-  padding: 0 1.5rem;
-}
 
-.tpl-carousel__viewport {
+/* ═══════════════════════════════════════════════════════════
+   TEMPLATE ORBIT CAROUSEL  (Framer-style 3D ring)
+   ═══════════════════════════════════════════════════════════ */
+
+.tpl-orbit {
   position: relative;
-  aspect-ratio: 16 / 10;
-  border-radius: 18px;
+  padding: 5rem 0 2rem;
+  text-align: center;
   overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--border);
 }
 
-/* Každý slide leží přes sebe; aktivní se odkryje */
-.tpl-carousel__slide {
-  position: absolute;
-  inset: 0;
-  display: block;
-  text-decoration: none;
+/* ── Header ── */
+.tpl-orbit__header { margin-bottom: 1rem; }
+
+.tpl-orbit__heading {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
   color: var(--white);
+  margin: 0.4rem 0 0;
+}
+.tpl-orbit__heading em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+/* ── 3D Scene ── */
+.tpl-orbit__scene {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  perspective: 1400px;
+  perspective-origin: 50% 48%;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.tpl-orbit__scene:active { cursor: grabbing; }
+
+/* ambient glow behind the ring */
+.tpl-orbit__glow {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 500px; height: 320px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse,
+    var(--accent-dim) 0%,
+    transparent 70%);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* tilt wrapper — mouse parallax rotateX / rotateY */
+.tpl-orbit__tilt {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 0; height: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ring — holds rotation only */
+.tpl-orbit__ring {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ── Orbit Card ── */
+.tpl-orbit__item {
+  position: absolute;
+  left: -120px;
+  top: -160px;
+  width: 240px;
+  height: 320px;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.tpl-orbit__card {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(165deg, var(--surface-2) 0%, var(--surface) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.35s, box-shadow 0.35s;
+}
+
+.tpl-orbit__item:hover .tpl-orbit__card {
+  border-color: var(--cat-clr, var(--accent));
+  box-shadow:
+    0 8px 40px rgba(0,0,0,0.35),
+    0 0 50px -15px var(--cat-clr, var(--accent-dim));
+}
+
+/* category accent top bar */
+.tpl-orbit__card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--cat-clr, var(--accent));
+}
+
+/* ── Category colours ── */
+.tpl-orbit__item[data-cat="remesla"]    { --cat-clr: #d4a04e; }
+.tpl-orbit__item[data-cat="gastro"]     { --cat-clr: #e05555; }
+.tpl-orbit__item[data-cat="beauty"]     { --cat-clr: #d65fa2; }
+.tpl-orbit__item[data-cat="maloobchod"] { --cat-clr: #4e8fd4; }
+.tpl-orbit__item[data-cat="wellness"]   { --cat-clr: #4ed49e; }
+
+/* faux browser bar */
+.tpl-orbit__bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  background: rgba(0,0,0,0.15);
+}
+
+.tpl-orbit__dots {
+  display: flex;
+  gap: 4px;
+}
+.tpl-orbit__dots i {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  display: block;
+  font-style: normal;
+}
+.tpl-orbit__dots i:first-child  { background: #ff5f57; }
+.tpl-orbit__dots i:nth-child(2) { background: #febc2e; }
+.tpl-orbit__dots i:last-child   { background: #28c840; }
+
+.tpl-orbit__url {
+  flex: 1;
+  font-size: 0.65rem;
+  color: var(--gray-2);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* card body */
+.tpl-orbit__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.2rem 1.1rem;
+  gap: 0.3rem;
+}
+
+.tpl-orbit__cat-badge {
+  display: inline-block;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cat-clr, var(--accent-2));
+  margin-bottom: auto;
+}
+
+.tpl-orbit__title {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.tpl-orbit__sub {
+  font-size: 0.76rem;
+  color: var(--gray);
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* ── Hint ── */
+.tpl-orbit__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  font-size: 0.76rem;
+  color: var(--gray-2);
+}
+.tpl-orbit__hint svg { opacity: 0.5; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   TEMPLATE MODAL (preview)
+   ═══════════════════════════════════════════════════════════ */
+.tpl-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transform: scale(1.04);
-  transition:
-    opacity   .8s var(--ease),
-    transform .8s var(--ease),
-    visibility 0s linear .8s;
-  will-change: opacity, transform;
+  transition: opacity 0.4s var(--ease), visibility 0s linear 0.4s;
 }
-
-.tpl-carousel__slide.is-active {
+.tpl-modal.open {
   opacity: 1;
   visibility: visible;
-  transform: scale(1);
-  transition:
-    opacity   .8s var(--ease),
-    transform .8s var(--ease),
-    visibility 0s;
-  z-index: 2;
+  transition: opacity 0.4s var(--ease), visibility 0s;
 }
 
-.tpl-carousel__media {
+.tpl-modal__backdrop {
   position: absolute;
   inset: 0;
-  overflow: hidden;
+  background: rgba(7,10,15,0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
 }
 
-.tpl-carousel__media iframe {
+.tpl-modal__window {
+  position: relative;
+  width: 92vw;
+  max-width: 1200px;
+  height: 82vh;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.4s var(--ease);
+}
+.tpl-modal.open .tpl-modal__window {
+  transform: scale(1) translateY(0);
+}
+
+.tpl-modal__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-2);
+  flex-shrink: 0;
+}
+
+.tpl-modal__dots {
+  display: flex;
+  gap: 5px;
+}
+.tpl-modal__dots i {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  display: block;
+  font-style: normal;
+}
+.tpl-modal__dots i:first-child  { background: #ff5f57; }
+.tpl-modal__dots i:nth-child(2) { background: #febc2e; }
+.tpl-modal__dots i:last-child   { background: #28c840; }
+
+.tpl-modal__url {
+  flex: 1;
+  font-size: 0.75rem;
+  color: var(--gray-2);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tpl-modal__open {
+  font-size: 0.72rem;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.tpl-modal__open:hover { text-decoration: underline; }
+
+.tpl-modal__close {
+  background: none;
+  border: none;
+  color: var(--gray);
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 0 0.3rem;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.tpl-modal__close:hover { color: var(--white); }
+
+.tpl-modal__body {
+  flex: 1;
+  position: relative;
+}
+.tpl-modal__frame {
   width: 100%;
   height: 100%;
   border: 0;
-  pointer-events: none;          /* klik řeší celý <a> */
-  background: var(--bg-2);
+  background: var(--bg);
 }
 
-.tpl-carousel__caption {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  z-index: 3;
-  padding: 2.2rem 1.6rem 1.4rem;
-  background: linear-gradient(to top,
-              rgba(7,10,15,0.92) 0%,
-              rgba(7,10,15,0.55) 55%,
-              transparent 100%);
+
+/* ── Orbit responsive ── */
+@media (max-width: 768px) {
+  .tpl-orbit { padding: 3rem 0 1.5rem; }
+  .tpl-orbit__scene { height: 380px; perspective: 1100px; }
+  .tpl-orbit__item {
+    left: -95px; top: -130px;
+    width: 190px; height: 260px;
+  }
+  .tpl-orbit__title { font-size: 1rem; }
+  .tpl-orbit__sub   { font-size: 0.68rem; }
+  .tpl-orbit__body  { padding: 1rem 0.9rem; }
+  .tpl-orbit__card  { border-radius: 13px; }
+  .tpl-orbit__glow  { width: 350px; height: 220px; }
+
+  .tpl-modal__window { width: 96vw; height: 75vh; border-radius: 12px; }
+  .tpl-modal__open   { display: none; }
 }
 
-.tpl-carousel__cat {
-  display: block;
-  font-size: .72rem;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--accent-2);
-  margin-bottom: .35rem;
-}
-
-.tpl-carousel__name {
-  font-family: var(--font-sans);
-  font-size: clamp(1.05rem, 2.4vw, 1.45rem);
-  font-weight: 600;
-  margin: 0;
-}
-
-/* Tečková navigace */
-.tpl-carousel__dots {
-  display: flex;
-  justify-content: center;
-  gap: .55rem;
-  margin-top: 1.4rem;
-}
-
-.tpl-carousel__dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  background: var(--border-2);
-  transition: background .3s var(--ease), transform .3s var(--ease);
-}
-
-.tpl-carousel__dot.is-active {
-  background: var(--accent);
-  transform: scale(1.35);
-}
-
-@media (max-width: 600px) {
-  .tpl-carousel__viewport { aspect-ratio: 4 / 5; }
-  .tpl-carousel { margin: 2.5rem auto; }
+@media (max-width: 480px) {
+  .tpl-orbit__scene { height: 320px; perspective: 900px; }
+  .tpl-orbit__item {
+    left: -75px; top: -110px;
+    width: 150px; height: 220px;
+  }
+  .tpl-orbit__title { font-size: 0.88rem; }
+  .tpl-orbit__body  { padding: 0.85rem 0.7rem; }
+  .tpl-orbit__bar   { padding: 7px 9px; }
+  .tpl-orbit__dots i { width: 5px; height: 5px; }
+  .tpl-orbit__glow  { width: 260px; height: 180px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tpl-carousel__slide { transition: opacity .3s linear; transform: none; }
-  .tpl-carousel__slide.is-active { transform: none; }
+  .tpl-orbit__card { transition-duration: 0.01s !important; }
+  .tpl-modal,
+  .tpl-modal__window { transition-duration: 0.01s !important; }
 }
